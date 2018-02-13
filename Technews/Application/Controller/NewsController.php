@@ -3,12 +3,17 @@
 
 namespace Application\Controller;
 
+use Application\Model\Categorie\CategorieDb;
 use Core\Controller\AppController;
 
 class NewsController extends AppController
 {
     public function indexAction(){
-        $this->render('news/index',['titre' => 'Webforce 3 Rouen !']);
+
+        # Connexipon à la BDD
+        $categorieDb = new CategorieDb;
+        $categories  = $categorieDb->fetchAll();
+        $this->render('news/index',['categories' => $categories]);
        // include_once PATH_VIEWS . '/news/index.php';
     }
     public function categorieAction(){

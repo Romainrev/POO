@@ -29,12 +29,12 @@ abstract class DbTable
     }
 
     public function fetchAll(){
-        $sql = "SELECT * FROM" . $this->_table;
+        $sql = "SELECT * FROM " . $this->_table;
         $sth = $this->_db->prepare($sql);
         $sth-> execute();
         return $sth->fetchAll(
             \PDO::FETCH_CLASS,
-            $this->_classToMap0
+            $this->_classToMap
         );
 
     }
