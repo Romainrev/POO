@@ -6,7 +6,7 @@ namespace Application\Controller;
 class NewsController
 {
     public function indexAction(){
-        echo 'JE SUIS INDEX ACTION';
+       // include_once PATH_VIEWS . '/news/index.php';
     }
     public function categorieAction(){
         echo 'JE SUIS CATEGORIE ACTION';

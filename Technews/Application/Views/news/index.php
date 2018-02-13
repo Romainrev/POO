@@ -1,0 +1,1 @@
+<h1>Je suis la page d'accueil dans la vue</h1>
