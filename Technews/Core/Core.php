@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Core
 {
     public function __construct($params)
