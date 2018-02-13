@@ -9,6 +9,12 @@ define('PATH_VIEWS', PATH_APPLICATION . '/Views');
 define('PATH_HEADER', PATH_LAYOUT. '/header.inc.php');
 define('PATH_FOOTER', PATH_LAYOUT. '/footer.inc.php');
 
+# Connexion à la BDD
+define('DBHOST', 'localhost');
+define('DBNAME', 'technews');
+define('DBUSER', 'root');
+define('DBPASW', '');
+
 # Chargement de l'Autoload
 
 require_once 'autoloader.php';
