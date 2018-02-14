@@ -3,7 +3,11 @@
 
 namespace Application\Controller;
 
+use Application\Model\Article\ArticleDb;
+use Application\Model\Auteur\AuteurDb;
 use Application\Model\Categorie\CategorieDb;
+use Application\Model\Tags\Tags;
+use Application\Model\Tags\TagsDb;
 use Core\Controller\AppController;
 
 class NewsController extends AppController
@@ -11,18 +15,28 @@ class NewsController extends AppController
     public function indexAction(){
 
         # Connexipon à la BDD
-        $categorieDb = new CategorieDb;
-        $categories  = $categorieDb->fetchAll();
-        $this->render('news/index',['categories' => $categories]);
-       // include_once PATH_VIEWS . '/news/index.php';
+
+        $this->render('news/index');
+
     }
     public function categorieAction(){
-        echo 'JE SUIS CATEGORIE ACTION';
-        $this->render('news/categorie',['categorie' => 'Front ou Back ?']);
+        $categorieDb = new CategorieDb;
+        $categories  = $categorieDb->fetchAll();
+        $this->render('news/categorie',['categorie' => $categories]);
     }
     public function articleAction(){
-        echo 'JE SUIS ARTICLE ACTION';
-        $this->render('news/article',['titre2' => 'Formation de developeur !']);
+        $ArticleDb = new ArticleDb();
+        $Article   = $ArticleDb->fetchAll();
+        $this->render('news/article',['article' => $Article]);
     }
-
+    public function auteurAction(){
+        $AuteurDb = new AuteurDb();
+        $Auteur   = $AuteurDb->fetchAll();
+        $this->render('news/auteur', ['auteur' => $Auteur]);
+    }
+    public function tagsAction(){
+        $TagsDb = new TagsDb();
+        $Tags   = $TagsDb->fetchAll();
+        $this->render('new/tags', ['tags' =>$Tags]);
+    }
 }

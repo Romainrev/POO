@@ -1,3 +1,19 @@
+<?php
+
+#importation des classes
+
+
+#Récupération des catégories du site
+use Application\Model\Categorie\CategorieDb;
+
+$categorieDb = new CategorieDb;
+$categories = $categorieDb->fetchAll();
+
+# Pour tester
+$this->debug($categories);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
