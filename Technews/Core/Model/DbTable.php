@@ -1,41 +1,51 @@
 <?php
-/**
- * Une classe abstraite ne peut pas être instanciée directement. Il faut obligatoirement l'hérité (= extends db table).
- * Toute ses propriétés ou méthodes n'ont pas été défini, il faut définir son contenu pour l'utiliser.
- * Il faut pouvoir acceder à toute les tables d'une BDD à partir de cette classe.
- */
 namespace Core\Model;
-
-
 abstract class DbTable
 {
-    # Nom de la Table
     protected $_table;
-
-    # Clé Primaire
     protected $_primary;
-
-    # Classe à Mapper
     protected $_classToMap;
-
-    # Instance PDO, Object PDO, BDD
     private $_db;
-
     public function __construct()
     {
-        # Je récupère l'instance de PDO
-        $this->_db = DbFactory::PdoFactory();
-
+        $this->_db=DbFactory::PdoFactory();
     }
-
-    public function fetchAll(){
+    public function fetchAll(
+        $where ='',
+        $orderby = '',
+        $limit = '',
+        $offset = ''
+    ){
         $sql = "SELECT * FROM " . $this->_table;
+        if($where != '') {
+            $sql .= ' WHERE ' . $where;
+        }
+        if($orderby != '') {
+            $sql .= ' ORDER BY ' . $orderby;
+        }
+        if($limit !='') {
+            $sql .= ' LIMIT ' . $limit;
+        }
+        if($offset != '') {
+            $sql .= ' OFFSET ' . $offset;
+        }
         $sth = $this->_db->prepare($sql);
-        $sth-> execute();
+        $sth->execute();
         return $sth->fetchAll(
             \PDO::FETCH_CLASS,
             $this->_classToMap
         );
+    }
 
+    public function fetchOne($search, $column = ''){
+
+        empty($column) ? $column = $this->_primary : null;
+
+        $sth = $this->_db->prepare('SELECT * FROM ' .$this->_table . ' WHERE ' . $column . ' = :id');
+
+        $sth->bindValue(':search', $search, \PDO::PARAM_STR);
+
+        $sth->execute();
+        $sth->setFetchMode(\PDO::FETCH_CLASS, $this->_classToMap);
     }
 }

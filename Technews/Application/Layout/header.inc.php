@@ -1,16 +1,19 @@
 <?php
-
-#importation des classes
-
-
-#Récupération des catégories du site
 use Application\Model\Categorie\CategorieDb;
-
-$categorieDb = new CategorieDb;
+use Application\Model\Tags\TagsDb;
+use Application\Model\Article\ArticleDb;
+$categorieDb= new CategorieDb();
 $categories = $categorieDb->fetchAll();
+$tagsDb= new TagsDb();
+$tags = $tagsDb->fetchall();
+//$this->debug($categories);
+$articleDb = new ArticleDb();
+$sidebar = $articleDb->fetchAll('','DATECREATIONARTICLE DESC',5);
 
-# Pour tester
-$this->debug($categories);
+# Récupération des Articles en position "Special"
+$special = $articleDb->fetchAll('SPECIALARTICLE = 1');
+
+//$this->debug($sidebar);
 ?>
 
 
