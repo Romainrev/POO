@@ -49,10 +49,6 @@ class NewsController extends AppController
         $Tags   = $TagsDb->fetchAll();
         $this->render('new/tags', ['tags' =>$Tags]);
     }
-    public function businessAction(){
-        $articleDb = new ArticleDb();
-        $article = $articleDb->fetchAll('IDCATEGORIE =2');
-        $this->render('news/business', ['article' =>$article]);
 
-    }
+
 }
