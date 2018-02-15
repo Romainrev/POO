@@ -15,8 +15,18 @@ class NewsController extends AppController
     public function indexAction(){
 
         # Connexipon à la BDD
+        $articleDb = new ArticleDb;
 
-        $this->render('news/index');
+        # Récupération des articles
+        $articles = $articleDb->fetchAll();
+
+        # Récupération des articles en Spotlight
+        $spotlight = $articleDb->fetchAll('SPOTLIGHTARTICLE = 1');
+
+        $this->render('news/index',[
+            'articles' => $articles,
+            'spotlight' => $spotlight
+        ]);
 
     }
     public function categorieAction(){
