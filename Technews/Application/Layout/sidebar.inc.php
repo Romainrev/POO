@@ -26,7 +26,7 @@
                             </a>
                             <em></em>
                             <span>
-							<?= $side->getDATECREATIONARTICLE(); ?>
+							<time datetime="<?= $side->getDATECREATIONARTICLE(); ?>"></time>
 						</span>
                         </div>
                     </li>
@@ -92,22 +92,24 @@
 			</span>
         </div>
         <div class="list-special">
-            <article class="news-two-large">
-                <a href="#">
-                    <img alt="" src="images/product/4.jpg">
-                </a>
-                <h3><a href="#">Six big ways MacOS Sierra is going to change your Apple experience</a></h3>
-                <div class="meta-post">
-                    <a href="#">
-                        Sue	Benson
-                    </a>
-                    <em></em>
-                    <span>
-						23 Sep 2016
-					</span>
-                </div>
-
-            </article>
+            <div class="list-special">
+                <?php foreach ($special as $article) : ?>
+                    <article class="news-two-large">
+                        <a href="#">
+                            <img alt="<?= $article->getTITREARTICLE() ?>" src="<?= $article->getFULLIMAGEARTICLE() ?>">
+                        </a>
+                        <h3><a href="#"><?= $article->getTITREARTICLE() ?></a></h3>
+                        <div class="meta-post">
+                            <a href="#">
+                                <?= $article->getAUTEUROBJ()->getNOMCOMPLETAUTEUR(); ?>
+                            </a>
+                            <em></em>
+                            <span>
+                            <time datetime="<?= $article->getDATECREATIONARTICLE(); ?>"></time>
+                        </span>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
         </div>
     </div>
 </div>
