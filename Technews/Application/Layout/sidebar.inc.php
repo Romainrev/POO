@@ -12,15 +12,16 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="tab1">
             <ul class="list-news-popular">
+
                 <?php foreach ($sidebar as $side):?>
                     <li>
                         <a href="#">
-                            <img alt="" src="<?= PATH_PUBLIC?>/images/product/<?=$side->getFEATUREDIMAGEARTICLE()?>">
+                            <img alt="" src="<?= $side->getFULLIMAGEARTICLE()?>">
                         </a>
                         <h3><a href="#"><?= $side->getTITREARTICLE()?></a></h3>
                         <div class="meta-post">
                             <a href="#">
-                                Ashley Ford
+                                <?= $side->getAUTEUROBJ()->getNOMCOMPLETAUTEUR()?>
 
                             </a>
                             <em></em>

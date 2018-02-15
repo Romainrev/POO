@@ -3,6 +3,9 @@
 namespace Application\Model\Article;
 
 
+use Application\Model\Auteur\AuteurDb;
+use Application\Model\Categorie\CategorieDb;
+
 class Article
 {
     private $IDARTICLE,
@@ -13,7 +16,36 @@ class Article
             $FEATUREDIMAGEARTICLE,
             $SPECIALARTICLE,
             $SPOTLIGHTARTICLE,
-            $DATECREATIONARTICLE;
+            $DATECREATIONARTICLE,
+            $CATEGORIEOBJ,
+            $AUTEUROBJ;
+
+    public function __construct()
+    {
+        # L'Appel au constructeur se fait de façon automatique par la classe PDO
+        $categorieDb = new CategorieDb();
+        $auteurDb    = new AuteurDb();
+
+        $this->AUTEUROBJ = $auteurDb->fetchOne($this->IDAUTEUR);
+        $this->CATEGORIEOBJ = $categorieDb->fetchOne($this->IDCATEGORIE);
+
+    }
+
+    /**
+     * @return void
+     */
+    public function getCATEGORIEOBJ()
+    {
+        return $this->CATEGORIEOBJ;
+    }
+
+    /**
+     * @return void
+     */
+    public function getAUTEUROBJ()
+    {
+        return $this->AUTEUROBJ;
+    }
 
     /**
      * @return mixed
@@ -87,5 +119,11 @@ class Article
         return $this->DATECREATIONARTICLE;
     }
 
+    /**
+     * Retourne l'URL complète de l'article
+     */
+    public function getFULLIMAGEARTICLE() {
+        return PATH_PUBLIC . '/images/product/' . $this->FEATUREDIMAGEARTICLE;
+    }
 
     }
