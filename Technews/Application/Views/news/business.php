@@ -43,4 +43,3 @@
     </div>
     <?php include PATH_SIDEBAR;?>
 </div>
-

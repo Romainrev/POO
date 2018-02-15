@@ -138,9 +138,10 @@ class Article
             $stringCut = substr($string, 0, 170);
 
             # Je m'assure de ne pas couper de mot !
-            $string = substr($stringCut, 0, strrpos($stringCut, ''));
+            $string = substr($stringCut, 0, strrpos($stringCut, ' '));
 
         endif;
+        return $string.'...';
 
     }
 
