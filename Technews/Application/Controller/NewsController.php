@@ -3,10 +3,10 @@
 
 namespace Application\Controller;
 
+
 use Application\Model\Article\ArticleDb;
 use Application\Model\Auteur\AuteurDb;
 use Application\Model\Categorie\CategorieDb;
-use Application\Model\Tags\Tags;
 use Application\Model\Tags\TagsDb;
 use Core\Controller\AppController;
 use Core\Model\DbFactory;
@@ -15,65 +15,41 @@ use Core\Model\ORM;
 class NewsController extends AppController
 {
     public function indexAction(){
-
-        # Connexipon à la BDD
-        $articleDb = new ArticleDb;
-
-        # Récupération des articles
+        $articleDb = new ArticleDb();
         $articles = $articleDb->fetchAll();
-
-        # Récupération des articles en Spotlight
         $spotlight = $articleDb->fetchAll('SPOTLIGHTARTICLE = 1');
 
-        $this->render('news/index',[
-            'articles' => $articles,
-            'spotlight' => $spotlight
-        ]);
-
+        $this->render('news/index',['articles'=>$articles,'spotlight'=>$spotlight]);
+        #include_once PATH_VIEWS. '/news/index.php';
     }
     public function categorieAction(){
-        $categorieDb = new CategorieDb;
-        $categories  = $categorieDb->fetchAll();
+        $categorieDb= new CategorieDb();
+        $categories = $categorieDb->fetchAll();
         $this->render('news/categorie');
     }
     public function articleAction(){
-        DbFactory::IdiormFactory();
+        #DbFactory::IdiormFactory();
         $idarticle      = $_GET['idarticle'];
         $article        = ORM::for_table('view_articles')->find_one($idarticle);
         $tags           = ORM::for_table('tags')->where('IDTAGS', $idarticle)->find_result_set();
         $suggestions    = ORM::for_table('view_articles')->where('IDCATEGORIE', $article->IDCATEGORIE)->limit(3)->find_result_set();
-        $auteur         = ORM::for_table('auteur')->where('IDAUTEUR', $article->IDAUTEUR)->find_one();
-        $this->render('news/article', ['article'=>$article, 'tags'=>$tags, 'suggestions'=>$suggestions ,'auteur'=>$auteur]);
-
-        # Récupération des Articles de la Catégorie (suggestions)
-
-        # Je récupère uniquement, les articles de la même
-        # catégorie que mon article
-
-        # Sauf mon article en cours
-
-        # 3 articles maximum
-
-        # Par ordre décroissant
-
-        # Je récupère les résultats
-
-        # Transmission à la Vue.
+        $auteur         = ORM::for_table('auteur')->where('IDAUTEUR',$article->IDAUTEUR)->find_one();
+        $this->render('news/article', ['article' => $article, 'tags' => $tags, 'suggestions' => $suggestions,'auteur'=>$auteur]);
     }
     public function auteurAction(){
-        $AuteurDb = new AuteurDb();
-        $Auteur   = $AuteurDb->fetchAll();
-        $this->render('news/auteur', ['auteur' => $Auteur]);
+        $auteurDb = new AuteurDb();
+        $auteurs = $auteurDb->fetchAll();
+        $this->render('news/auteur',['auteur'=>$auteurs]);
     }
     public function tagsAction(){
-        $TagsDb = new TagsDb();
-        $Tags   = $TagsDb->fetchAll();
-        $this->render('new/tags', ['tags' =>$Tags]);
+        $tagDb = new TagsDb();
+        $tags = $tagDb->fetchAll();
+        $this->render('news/tags',['tags'=>$tags]);
     }
     public function businessAction(){
-        $articleDb = new ArticleDb();
-        $article= $articleDb->fetchAll('IDCATEGORIE = 2');
-        $this->render('news/categorie', ['articles' => $article]);
+        $articleDb= new ArticleDb();
+        $article = $articleDb->fetchAll('IDCATEGORIE = 2');
+        $this->render('news/categorie',['articles'=>$article]);
     }
     public function computingAction(){
         $articleDb= new ArticleDb();
@@ -85,16 +61,17 @@ class NewsController extends AppController
         $article = $articleDb->fetchAll('IDCATEGORIE = 4');
         $this->render('news/categorie',['articles'=>$article]);
     }
-
     public function idiormAction(){
-        # Récupération des catégories
         DbFactory::IdiormFactory();
-        $auteurs = ORM::for_table('auteur')->find_result_set();
-
-      //  $this->debug($categories);
-        foreach ($auteurs as $auteur) :
-            echo $auteur->NOMAUTEUR .'<br>';
+        $auteurs=ORM::for_table('auteur')->
+        find_result_set();
+        # find_array();
+        #$this->renderJson($categories);
+        echo "<table border='1'>";
+        foreach ($auteurs as $auteur):
+            echo "<tr><td>".$auteur->NOMAUTEUR.'</td>'.'<td>'.$auteur->PRENOMAUTEUR.'</td>'.'</tr>';
         endforeach;
+        echo "</table>";
     }
 
 

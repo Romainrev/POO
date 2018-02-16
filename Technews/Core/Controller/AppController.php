@@ -3,69 +3,60 @@
 namespace Core\Controller;
 
 
+use Core\Model\DbFactory;
+use Core\Model\Helper;
+
 class AppController
 {
+    use Helper;
+
     private $_viewparams;
 
-    /**
-     * Permet de générer l'affichage de la vue passé en paramètre.
-     * @param $view
-     * @param array $viewparam
-     */
-    protected function render($view, array $viewparams = []) {
+    public function __construct()
+    {
+        DbFactory::IdiormFactory();
+    }
 
-        # Récupération et affectation des paramètres de la Vue
-        $this->_viewparams = $viewparams;
-
-        # Permet d'acceder au tableau directement dans des variables
+    protected function render($view,array $viewparams=[]){
+        $this->_viewparams=$viewparams;
         extract($this->_viewparams);
 
-        # Chargement du Header
-        include_once  PATH_HEADER;
+        $view= PATH_VIEWS."/".$view.".php";
+        if(file_exists($view)) :
+            include_once PATH_HEADER;
+            include_once $view;
+            include_once PATH_FOOTER;
 
-        # Chargement de la Vue
-        include_once PATH_VIEWS . '/' . $view . '.php';
-
-        # Chargement du Footer
-        include_once PATH_FOOTER;
-
+        else :
+            $this->render('errors/404',['message'=>'Aucune vue correspondante']);
+        endif;
     }
 
-    protected function renderJson(array $param){
-        header('Content-Type: application/json');
-        echo json_encode($param);
+    protected function renderJson(Array $params){
+        header('Content-Type:application\json');
+        echo json_encode($params);
     }
-
 
     /**
-     * Renvoi le tableau de paramètres de la vue
      * @return mixed
      */
     public function getViewparams()
     {
-        return $this->_viewparams;
-        # Je vais pouvoir accéder à mon tableau comme un objet
-
         $object = new \ArrayObject($this->_viewparams);
         $object->setFlags(\ArrayObject::ARRAY_AS_PROPS);
         return $object;
     }
-
-    /**
-     * Permet de débugger les paramètres de la vue ou le paramètre passé à la fonction.
-     * @param string $params
-     */
     public function debug($params =''){
-
-        if(empty($params)) :
-            $params = $this->_viewparams;
+        if(empty($params)):
+            $params=$this->_viewparams;
         endif;
-
-        echo'<pre>';
+        echo "<pre>";
         print_r($params);
-        echo'</pre>';
+        echo "</pre>";
     }
     public function getAction(){
         return empty($_GET['action']) ? 'accueil' : $_GET['action'];
     }
+
+
 }

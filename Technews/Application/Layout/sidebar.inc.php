@@ -12,7 +12,6 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="tab1">
             <ul class="list-news-popular">
-
                 <?php foreach ($sidebar as $side):?>
                     <li>
                         <a href="#">
@@ -26,7 +25,8 @@
                             </a>
                             <em></em>
                             <span>
-							<time datetime="<?= $side->getDATECREATIONARTICLE(); ?>"></time>
+                            <time datetime="<?= $side->getDATECREATIONARTICLE(); ?>"></time>
+
 						</span>
                         </div>
                     </li>
@@ -92,24 +92,25 @@
 			</span>
         </div>
         <div class="list-special">
-            <div class="list-special">
-                <?php foreach ($special as $article) : ?>
-                    <article class="news-two-large">
+            <?php foreach ($special as $specialarticle):?>
+                <article class="news-two-large">
+                    <a href="#">
+                        <img alt="" src="<?= $specialarticle->getFULLIMAGEARTICLE()?>">
+                    </a>
+                    <h3><a href="#"><?= $specialarticle->getTITREARTICLE()?></a></h3>
+                    <div class="meta-post">
                         <a href="#">
-                            <img alt="<?= $article->getTITREARTICLE() ?>" src="<?= $article->getFULLIMAGEARTICLE() ?>">
+                            <?= $specialarticle->getAUTEUROBJ()->getNOMCOMPLETAUTEUR()?>
                         </a>
-                        <h3><a href="#"><?= $article->getTITREARTICLE() ?></a></h3>
-                        <div class="meta-post">
-                            <a href="#">
-                                <?= $article->getAUTEUROBJ()->getNOMCOMPLETAUTEUR(); ?>
-                            </a>
-                            <em></em>
-                            <span>
-                            <time datetime="<?= $article->getDATECREATIONARTICLE(); ?>"></time>
-                        </span>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
+                        <em></em>
+                        <span>
+                        <time datetime="<?= $specialarticle->getDATECREATIONARTICLE(); ?>"></time>
+
+					</span>
+                    </div>
+
+                </article>
+            <?php endforeach;?>
         </div>
     </div>
 </div>
