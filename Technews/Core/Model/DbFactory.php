@@ -15,4 +15,24 @@ class DbFactory
         # On retourne $pdo
         return $pdo;
     }
+
+
+    /**
+     * Créer une instance de Idiorm ORM
+     */
+
+    public static function IdiormFactory(){
+        ORM::configure('mysql:host='.DBHOST.';dbname='.DBNAME);
+        ORM::configure('username', DBUSER);
+        ORM::configure('password', DBPASW);
+
+        /*
+         * Configuration de la clé primaire de chaque table, nécéssaire uniquement si les clé primaire sont différentes de ID.
+         * Lien vers la Doc : https://idiorm.readthedocs.io/en/latest/configuration.html
+         */
+        ORM::configure('id_column_overrides', array(
+            'article' => 'IDARTICLE',
+            'view_articles' => 'IDARTICLE',
+        ));
+    }
 }

@@ -1,12 +1,13 @@
 <div class="row">
     <!--colleft-->
     <div class="col-md-8 col-sm-12">
-        <?php foreach ($articles as $categories):?>
+
             <div class="box-caption">
 
-                <span><?= $categories->getCATEGORIEOBJ()->getLIBELLECATEGORIE()?></span>
+                <span><?= $this->getAction()?></span>
             </div>
             <!--list-news-cate-->
+        <?php foreach ($articles as $categories):?>
 
 
             <div class="list-news-cate">

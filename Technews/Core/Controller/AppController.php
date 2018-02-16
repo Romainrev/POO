@@ -31,6 +31,11 @@ class AppController
 
     }
 
+    protected function renderJson(array $param){
+        header('Content-Type: application/json');
+        echo json_encode($param);
+    }
+
 
     /**
      * Renvoi le tableau de paramètres de la vue
@@ -59,5 +64,8 @@ class AppController
         echo'<pre>';
         print_r($params);
         echo'</pre>';
+    }
+    public function getAction(){
+        return empty($_GET['action']) ? 'accueil' : $_GET['action'];
     }
 }
