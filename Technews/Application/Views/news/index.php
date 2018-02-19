@@ -17,7 +17,7 @@
                         </div>
                         <div class="spotlight-item-caption">
                             <h2 class="font-heading">
-                                <a href="#">
+                                <a href="<?= $this->generateUfm('article/$1-$2.html', [$spotlights->getIDARTICLE(), $this->slugify($spotlights->getTITREARTICLE())])?>">
                                     <?= $spotlights->getTITREARTICLE()?></a>
                             </h2>
                             <div class="meta-post">
